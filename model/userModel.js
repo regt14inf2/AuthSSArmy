@@ -33,7 +33,7 @@ const {pool} = require('../db/db')
 
     const findUserByUserName = async(userId) => {
         try {
-            let queryString = `SELECT "USERID", "PASSWORD" FROM public."MAS_USER" 
+            let queryString = `SELECT * FROM public."MAS_USER" 
             WHERE "USERID" = '${userId}'`
 
             const result = await pool.query(queryString);

@@ -62,7 +62,7 @@ exports.loginController = (req, res, next) => {
     const { USER_ID='', PASSWORD} = req.body;
     UserModel.findUserByUserName(USER_ID)
         .then((rows) => {
-            // console.log("as",rows);
+            console.log("as",rows.rows);
             let row = rows.rows;
             if(row.length !== 0) {
                 return bcrypt.compare(PASSWORD, row[0].PASSWORD)
@@ -74,7 +74,9 @@ exports.loginController = (req, res, next) => {
                                 })
                         } else {
                             let jwtToken = jwt.sign({
-                                userId: row[0].USERID
+                                userId: row[0].USERID,
+                                role: row[0].ROLE,
+                                detp: row[0].DETP
                             }, 
                             config.TOKEN_KEY,
                             {
@@ -83,7 +85,10 @@ exports.loginController = (req, res, next) => {
                             );
 
                             res.status(200).json({
-                                token: jwtToken,
+                                user: row[0].USERID,
+                                role: row[0].ROLE,
+                                detp: row[0].DETP,
+                                accesstoken: jwtToken,
                                 expiresIn: 3600,
                             });
                         }
