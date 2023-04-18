@@ -80,7 +80,7 @@ exports.loginController = (req, res, next) => {
                             }, 
                             config.TOKEN_KEY,
                             {
-                                expiresIn: "1h"
+                                expiresIn: "24h"
                             },
                             );
 
@@ -89,7 +89,8 @@ exports.loginController = (req, res, next) => {
                                 role: row[0].ROLE,
                                 detp: row[0].DETP,
                                 accesstoken: jwtToken,
-                                expiresIn: 3600,
+                                //expires in 1 day 3600 is 1 hour 24 is 1 day
+                                expiresIn: 3600*24,
                             });
                         }
                     }).catch((error) => {
